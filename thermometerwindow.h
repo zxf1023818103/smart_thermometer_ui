@@ -20,14 +20,14 @@ public:
 
 private slots:
     void on_settingsButton_clicked();
-    void on_settingsDialog_closed();
-    void on_settings_changed(const QSerialPortInfo& serialPortInfo,
+    void onSettingsDialogClosed();
+    void onSettingsChanged(const QSerialPortInfo& serialPortInfo,
                              const QString& endPoint,
                              const QString& deviceName,
                              const QString& deviceSecret,
                              const QString& productKey);
-    void on_temperature_changed(qreal temperature);
-    void on_error_occurred(const QString& errorString);
+    void onTemperatureChanged(qreal temperature);
+    void onErrorOccurred(const QString& errorString);
 
 private:
     Ui::ThermometerWindow *ui;

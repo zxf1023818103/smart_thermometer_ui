@@ -10,9 +10,9 @@ ThermometerWindow::ThermometerWindow(QWidget *parent) :
     ui->lcdNumber->setDecMode();
     ui->lcdNumber->setDigitCount(5);
     ui->lcdNumber->setSmallDecimalPoint(true);
-    connect(&thermometer, &Thermometer::temperatureChanged, this, &ThermometerWindow::on_temperature_changed);
-    connect(&thermometer, &Thermometer::errorOccurred, this, &ThermometerWindow::on_error_occurred);
-    connect(&client, &AliyunIotServiceClient::errorOccured, this, &ThermometerWindow::on_error_occurred);
+    connect(&thermometer, &Thermometer::temperatureChanged, this, &ThermometerWindow::onTemperatureChanged);
+    connect(&thermometer, &Thermometer::errorOccurred, this, &ThermometerWindow::onErrorOccurred);
+    connect(&client, &AliyunIotServiceClient::errorOccured, this, &ThermometerWindow::onErrorOccurred);
 }
 
 ThermometerWindow::~ThermometerWindow()
@@ -20,7 +20,7 @@ ThermometerWindow::~ThermometerWindow()
     delete ui;
 }
 
-void ThermometerWindow::on_settingsDialog_closed()
+void ThermometerWindow::onSettingsDialogClosed()
 {
     dialog = nullptr;
 }
@@ -33,13 +33,13 @@ void ThermometerWindow::on_settingsButton_clicked()
     else {
         dialog = new SettingDialog();
     }
-    connect(dialog, &SettingDialog::accepted, this, &ThermometerWindow::on_settingsDialog_closed);
-    connect(dialog, &SettingDialog::rejected, this, &ThermometerWindow::on_settingsDialog_closed);
-    connect(dialog, &SettingDialog::settingsChanged, this, &ThermometerWindow::on_settings_changed);
+    connect(dialog, &SettingDialog::accepted, this, &ThermometerWindow::onSettingsDialogClosed);
+    connect(dialog, &SettingDialog::rejected, this, &ThermometerWindow::onSettingsDialogClosed);
+    connect(dialog, &SettingDialog::settingsChanged, this, &ThermometerWindow::onSettingsChanged);
     dialog->show();
 }
 
-void ThermometerWindow::on_settings_changed(const QSerialPortInfo& serialPortInfo,
+void ThermometerWindow::onSettingsChanged(const QSerialPortInfo& serialPortInfo,
                                             const QString& endPoint,
                                             const QString& deviceName,
                                             const QString& deviceSecret,
@@ -54,13 +54,13 @@ void ThermometerWindow::on_settings_changed(const QSerialPortInfo& serialPortInf
     }
 }
 
-void ThermometerWindow::on_temperature_changed(qreal temperature) {
+void ThermometerWindow::onTemperatureChanged(qreal temperature) {
     char digits[10] = {0};
     sprintf(digits, "%.2f", temperature);
     ui->lcdNumber->display(digits);
     client.reportTemperature(temperature);
 }
 
-void ThermometerWindow::on_error_occurred(const QString& errorString) {
+void ThermometerWindow::onErrorOccurred(const QString& errorString) {
     ui->statusbar->showMessage(errorString);
 }
