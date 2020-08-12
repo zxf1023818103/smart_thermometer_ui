@@ -23,10 +23,10 @@ jobs:
     - uses: actions/checkout@v2
 
     - name: Install MSVC compiler
-        uses: ilammy/msvc-dev-cmd@v1
+        uses: ilammy/msvc-dev-cmd
         with:
           # 14.1 is for vs2017, 14.2 is vs2019, following the upstream vcpkg build from Qv2ray-deps repo
-          toolset: 14.1
+          toolset: 14.2
           arch: x64
 
     - name: Cache Qt
