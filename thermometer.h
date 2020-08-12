@@ -1,6 +1,7 @@
 #ifndef THERMOMETER_H
 #define THERMOMETER_H
 
+#include <stdlib.h>
 #include <QObject>
 #include <QSerialPort>
 #include <QSerialPortInfo>

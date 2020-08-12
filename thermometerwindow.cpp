@@ -1,5 +1,6 @@
 #include "thermometerwindow.h"
 #include "ui_thermometerwindow.h"
+#include <stdio.h>
 
 ThermometerWindow::ThermometerWindow(QWidget *parent) :
     QMainWindow(parent),
